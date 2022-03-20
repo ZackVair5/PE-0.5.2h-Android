@@ -21,7 +21,32 @@ import Achievements;
 import editors.MasterEditorMenu;
 import flixel.input.keyboard.FlxKey;
 
+import haxe.Json;
+#if MODS_ALLOWED
+import sys.FileSystem
+import sys.io.File
+#end
+
 using StringTools;
+
+typedef MainMenuData =
+{
+storymodeP:Array<Int>,
+freeplayP:Array<Int>,
+modsP:Array<Int>,
+awardsP:Array<Int>,
+creditsP:Array<Int>,
+donateP:Array<Int>,
+optionsP:Array<Int>,
+storymodeS:Array<Float>,
+freeplayS:Array<Float>,
+modsS:Array<Float>,
+awardsS:Array<Float>,
+creditsS:Array<Float>,
+donateS:Array<Float>,
+optionsS:Array<Float>,
+centerX:Bool
+}
 
 class MainMenuState extends MusicBeatState
 {
@@ -47,6 +72,8 @@ class MainMenuState extends MusicBeatState
 	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
 
+    var mainMenuJSON:MainMenuData;
+
 	override function create()
 	{
 		WeekData.loadTheFirstEnabledMod();
@@ -55,6 +82,7 @@ class MainMenuState extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
 		#end
+		
 		debugKeys = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 
 		camGame = new FlxCamera();
@@ -99,7 +127,7 @@ class MainMenuState extends MusicBeatState
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
-		var scale:Float = 1;
+		//var scale:Float = 1;
 		/*if(optionShit.length > 6) {
 			scale = 6 / optionShit.length;
 		}*/
@@ -266,7 +294,7 @@ class MainMenuState extends MusicBeatState
 
 		menuItems.forEach(function(spr:FlxSprite)
 		{
-			spr.screenCenter(X);
+			//spr.screenCenter(X);
 		});
 	}
 
